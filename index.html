@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Navigate to Rush Carwash</title>
+  <script type="module">
+    import { createMapLink } from 'https://cdn.skypack.dev/create-map-link';
+
+    const url = createMapLink('directions', {
+      provider: 'auto',
+      destination: 'Rush Carwash Mexicali',
+      travelMode: 'driving'
+    });
+
+    window.location.href = url;
+  </script>
+</head>
+<body>
+  <p>Redirecting to your maps app...</p>
+</body>
+</html>
