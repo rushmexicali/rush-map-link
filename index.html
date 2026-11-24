@@ -6,16 +6,37 @@
   <meta name="robots" content="noindex">
   <title>Cómo llegar a RUSH Car Wash</title>
   <!--
-    Destino del QR impreso en las tarjetas de RUSH Car Wash.
-    Esta direccion (rushmexicali.github.io/rush-map-link/) esta impresa: no
-    se puede cambiar. Lo que si se puede cambiar es a donde manda: es el
-    enlace de abajo, que aparece tres veces (meta, script y boton).
-    Sin librerias externas a proposito: la version anterior dependia de
+    Destino de los QR impresos de RUSH Car Wash. Abre la app de mapas con la
+    RUTA en coche ya trazada hacia el local, lista para darle "Iniciar":
+      - iPhone / iPad  -> Apple Maps
+      - todo lo demas  -> Google Maps
+    Sin librerias externas a proposito: la primera version dependia de
     cdn.skypack.dev y dejo de funcionar cuando ese servicio fallo.
+
+    Hay dos copias identicas de este archivo, una por cada QR impreso:
+      - rushcarwashmexicali.com/mapa            (repo webpage-rush, mapa/index.html)
+      - rushmexicali.github.io/rush-map-link/   (repo rush-map-link, index.html)
+    Si cambia el destino hay que editar las dos.
   -->
-  <meta http-equiv="refresh" content="0; url=https://maps.app.goo.gl/Di6qdCznT4uak2A59">
+  <meta http-equiv="refresh" content="1; url=https://www.google.com/maps/dir/?api=1&amp;destination=RUSH+Car+Wash+Mexicali&amp;destination_place_id=ChIJJWSCiS5x14ARrOy1vQiv91s&amp;travelmode=driving">
   <script>
-    window.location.replace('https://maps.app.goo.gl/Di6qdCznT4uak2A59');
+    (function () {
+      // Ruta en coche a la ficha de RUSH en Google Maps (place_id de la ficha).
+      var GOOGLE = 'https://www.google.com/maps/dir/?api=1&destination=RUSH+Car+Wash+Mexicali&destination_place_id=ChIJJWSCiS5x14ARrOy1vQiv91s&travelmode=driving';
+      // Ruta en coche en Apple Maps. Va por nombre porque Apple tiene la ficha
+      // "Rush Car Wash Mexicali" (Calzada de Las Americas 951); con coordenadas
+      // mostraba una direccion ajena en vez del negocio. Sin sll: con ese parametro
+      // abria una busqueda en lugar de la ruta.
+      var APPLE = 'https://maps.apple.com/?daddr=RUSH+Car+Wash+Mexicali&dirflg=d';
+
+      var ua = navigator.userAgent || '';
+      // Los iPad nuevos se anuncian como Mac: se distinguen por la pantalla tactil.
+      var esApple = /iPhone|iPad|iPod/.test(ua) ||
+        (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
+
+      window.RUSH_DESTINO = esApple ? APPLE : GOOGLE;
+      window.location.replace(window.RUSH_DESTINO);
+    })();
   </script>
   <style>
     body {
@@ -49,8 +70,12 @@
 </head>
 <body>
   <h1>RUSH CAR WASH</h1>
-  <p>Abriendo el mapa…</p>
-  <a class="btn" href="https://maps.app.goo.gl/Di6qdCznT4uak2A59">CÓMO LLEGAR</a>
+  <p>Abriendo la ruta en tu app de mapas…</p>
+  <a class="btn" id="ir" href="https://www.google.com/maps/dir/?api=1&amp;destination=RUSH+Car+Wash+Mexicali&amp;destination_place_id=ChIJJWSCiS5x14ARrOy1vQiv91s&amp;travelmode=driving">CÓMO LLEGAR</a>
   <p>Calzada de las Américas y Río Culiacán 951,<br>Mexicali, B.C.</p>
+  <script>
+    // El boton de respaldo lleva al mismo destino que la redireccion.
+    if (window.RUSH_DESTINO) document.getElementById('ir').href = window.RUSH_DESTINO;
+  </script>
 </body>
 </html>
