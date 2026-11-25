@@ -23,11 +23,12 @@
     (function () {
       // Ruta en coche a la ficha de RUSH en Google Maps (place_id de la ficha).
       var GOOGLE = 'https://www.google.com/maps/dir/?api=1&destination=RUSH+Car+Wash+Mexicali&destination_place_id=ChIJJWSCiS5x14ARrOy1vQiv91s&travelmode=driving';
-      // Ruta en coche en Apple Maps. Va por nombre porque Apple tiene la ficha
-      // "Rush Car Wash Mexicali" (Calzada de Las Americas 951); con coordenadas
-      // mostraba una direccion ajena en vez del negocio. Sin sll: con ese parametro
-      // abria una busqueda en lugar de la ruta.
-      var APPLE = 'https://maps.apple.com/?daddr=RUSH+Car+Wash+Mexicali&dirflg=d';
+      // Ruta en coche en Apple Maps. OJO: Apple tiene DOS fichas de RUSH y una
+      // esta mal ubicada ("Rush Car Wash Mexicali", unos 800 m al este). Buscar
+      // por nombre cae en la equivocada, asi que el destino va por coordenadas
+      // del local mas el place-id de la ficha buena ("RUSH Carwash Mexicali").
+      // Si Apple ignorara el place-id, las coordenadas siguen llevando al local.
+      var APPLE = 'https://maps.apple.com/directions?destination=32.663434,-115.432956&destination-place-id=I17DC1D341F57184C&mode=driving';
 
       var ua = navigator.userAgent || '';
       // Los iPad nuevos se anuncian como Mac: se distinguen por la pantalla tactil.
